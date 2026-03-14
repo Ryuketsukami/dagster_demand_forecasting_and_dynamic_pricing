@@ -1,11 +1,14 @@
+# from .assets import ingestion, validation, features, training, serving, monitoring
+# from .resources.storage import bigquery_io_manager, gcs_resource
+# from .resources.dask_resource import dask_resource
+# from .resources.mlflow_resource import mlflow_resource
+
 from dagster import Definitions, load_assets_from_modules
-from .assets import ingestion, validation, features, training, serving, monitoring
-from .resources.storage import bigquery_io_manager, gcs_resource
-from .resources.dask_resource import dask_resource
-from .resources.mlflow_resource import mlflow_resource
+
+from .assets import features, ingestion, monitoring, serving, training, validation
+from .jobs import retrain_job
 from .schedules import daily_schedule, retraining_schedule
 from .sensors.drift_sensor import drift_retrain_sensor
-from .jobs import retrain_job
 
 all_assets = load_assets_from_modules(
     [ingestion, validation, features, training, serving, monitoring]

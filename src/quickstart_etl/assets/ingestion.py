@@ -1,33 +1,41 @@
-import base64
-import json
-import os
-from io import BytesIO
+# import base64
+# import json
+# import os
+# from io import BytesIO
 
-import matplotlib.pyplot as plt
-import pandas as pd
-import requests
-from dagster import AssetExecutionContext, MaterializeResult, MetadataValue, asset
-from ..
+# import matplotlib.pyplot as plt
+# import pandas as pd
+# import requests
+# from dagster import AssetExecutionContext, MaterializeResult, MetadataValue, asset
+
+from dagster import asset
+
+from quickstart_etl.partitions import partitions_def
+
 
 # Downloads raw airline/demand data from public API or CSV and stores in GCS bucket. Returns a reference to the GCS path.
 @asset(group_name="ingestion", kinds=["python", "raw", "gcs", "api"], partitions_def=partitions_def)
 def raw_flight_data() -> None:
     return None
 
+
 # Ingests external data: holiday calendars, historical weather, currency rates, stores in GCS nbucket. Returns a reference to the GCS path.
 @asset(group_name="ingestion", kinds=["python"], partitions_def=partitions_def)
 def raw_external_signals() -> None:
     return None
 
+
 # Loads raw flight data from GCS into BigQuery Bronze table, Uses dagster-gcp BigQuery IO manager. Returns a reference to the BigQuery table.
-@asset(group_name="ingestion", kinds=["python"], partitions_def=partitions_def )
-def raw_flight_data() -> None:
+@asset(group_name="ingestion", kinds=["python"], partitions_def=partitions_def)
+def bronze_flights() -> None:
     return None
+
 
 # Loads raw external signals from GCS into BigQuery Bronze table, Uses dagster-gcp BigQuery IO manager. Returns a reference to the BigQuery table.
 @asset(group_name="ingestion", kinds=["python"], partitions_def=partitions_def)
-def raw_flight_data() -> None:
+def bronze_external() -> None:
     return None
+
 
 # @asset(group_name="ingestion", kinds=["python"])
 # def raw_flight_data() -> None:
