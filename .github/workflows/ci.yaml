@@ -176,6 +176,8 @@ jobs:
     runs-on: ubuntu-22.04
     needs: docker
     if: github.ref == 'refs/heads/main'
+    env:
+      DAGSTER_CLOUD_ORGANIZATION: mevmav
     steps:
       - uses: actions/checkout@v4
 
