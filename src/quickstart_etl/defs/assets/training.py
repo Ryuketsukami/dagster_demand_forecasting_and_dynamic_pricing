@@ -160,7 +160,7 @@ def training_dataset(
 @asset(
     group_name="training",
     deps=["training_dataset"],
-    kinds=["python", "gcs", "lightgbm", "optuna"],
+    kinds=["lightgbm", "optuna", "gcs"],
 )
 def trained_model(
     context: AssetExecutionContext,
