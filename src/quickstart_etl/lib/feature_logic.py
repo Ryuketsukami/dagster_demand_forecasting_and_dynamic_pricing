@@ -32,7 +32,11 @@ def compute_rsi(prices: pd.Series, period: int = 14) -> pd.Series:
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", RuntimeWarning)
         rs = avg_gain / avg_loss.replace(0, np.nan)
-    return 100.0 - (100.0 / (1.0 + rs))
+    rsi = 100.0 - (100.0 / (1.0 + rs))
+    # When avg_loss == 0 and avg_gain > 0, RS is infinite → RSI = 100
+    # When both are 0 (flat prices), leave as NaN
+    rsi = rsi.where((avg_loss != 0) | (avg_gain == 0), other=100.0)
+    return rsi
 
 
 def compute_macd(
