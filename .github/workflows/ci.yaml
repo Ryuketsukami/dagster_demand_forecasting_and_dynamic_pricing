@@ -60,18 +60,15 @@ jobs:
         run: uv sync --all-groups
 
       - name: Run tests
-        run: uv run pytest tests/ -v --tb=short
+        run: |
+          mkdir -p /tmp/dagster_home
+          uv run pytest tests/ -v --tb=short
         env:
-          # Only what tests actually need — fake values are fine
-          # because unit tests should use mocked resources
           DAGSTER_HOME: /tmp/dagster_home
           GCP_PROJECT_ID: "test-project"
           GCS_BUCKET_NAME: "test-bucket"
           BIGQUERY_DATASET: "test_dataset"
           BIGQUERY_LOCATION: "US"
-          MLFLOW_TRACKING_URI: "sqlite:///tmp/mlflow.db"
-          MLFLOW_EXPERIMENT_NAME: "test"
-          MLFLOW_MODEL_NAME: "test-model"
 
   validate-definitions:
     name: Validate Dagster Definitions
@@ -92,16 +89,14 @@ jobs:
         run: uv sync --all-groups
 
       - name: Validate Dagster definitions
-        run: uv run dagster definitions validate -m quickstart_etl.definitions
+        run: |
+          mkdir -p /tmp/dagster_home
+          uv run dagster definitions validate -m quickstart_etl.definitions
         env:
           DAGSTER_HOME: /tmp/dagster_home
-          # Use dummy values — validate just checks that
-          # definitions load without import errors,
-          # it doesn't actually connect to anything
+          # Dummy values — validate only checks import-time correctness,
+          # it never connects to GCP or any external service
           GCP_PROJECT_ID: "test-project"
           GCS_BUCKET_NAME: "test-bucket"
           BIGQUERY_DATASET: "test_dataset"
           BIGQUERY_LOCATION: "EU"
-          MLFLOW_TRACKING_URI: "sqlite:///tmp/mlflow.db"
-          MLFLOW_EXPERIMENT_NAME: "test"
-          MLFLOW_MODEL_NAME: "test-model"
