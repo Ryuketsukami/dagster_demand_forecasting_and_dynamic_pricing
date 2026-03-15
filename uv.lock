@@ -1469,6 +1469,43 @@ wheels = [
 ]
 
 [[package]]
+name = "dagster-gcp-pandas"
+version = "0.27.11"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.11'",
+]
+dependencies = [
+    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "dagster-gcp", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "pandas", marker = "python_full_version < '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/36/47/747b75c632f08c4275f3c8e19f61807a0c0576c22c28c618d01650ef4f99/dagster_gcp_pandas-0.27.11.tar.gz", hash = "sha256:a141fbb31d50ab7678aa9978252eb6181127a19ffbf5a06e0b17f0cb9779dbf3", size = 8647, upload-time = "2025-09-18T20:34:12.238Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c2/8a/d9531bae8185bdb40023c3993edad37c9e74ef47c29dfe7e5a3713306c61/dagster_gcp_pandas-0.27.11-py3-none-any.whl", hash = "sha256:480394f309c48fc7d067dbfd08bc82a87ae30f1bdbc68b39c88451d3403167a5", size = 9418, upload-time = "2025-09-18T20:34:11.418Z" },
+]
+
+[[package]]
+name = "dagster-gcp-pandas"
+version = "0.28.19"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.14'",
+    "python_full_version == '3.13.*'",
+    "python_full_version == '3.12.*'",
+    "python_full_version == '3.11.*'",
+]
+dependencies = [
+    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "dagster-gcp", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "pandas", marker = "python_full_version >= '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f6/f5/f6ce4ebb42be4246a54862006d4d0d52d7cb453a51eb54e5fe6b5f83fc31/dagster_gcp_pandas-0.28.19.tar.gz", hash = "sha256:384ceb90bd3c6e4e67b1cf181aa4d36dff932f33e535b129eb8d8f9147df94ab", size = 11986, upload-time = "2026-03-12T17:35:42.413Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3a/80/04fda7a77c188719464221aa1f7512eb9835c4932831c0390cff4c4c5c15/dagster_gcp_pandas-0.28.19-py3-none-any.whl", hash = "sha256:ace8cb1809f2ebbbb3f974e1c4e6d8ed09e54185fa48a1fc1e44c1132ae23a63", size = 9083, upload-time = "2026-03-12T17:35:41.541Z" },
+]
+
+[[package]]
 name = "dagster-graphql"
 version = "1.11.11"
 source = { registry = "https://pypi.org/simple" }
@@ -6740,6 +6777,8 @@ dependencies = [
     { name = "dagster-docker", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "dagster-gcp", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "dagster-gcp", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "dagster-gcp-pandas", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "dagster-gcp-pandas", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "dagster-mlflow", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "dagster-mlflow", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "dask", extra = ["complete"] },
@@ -6753,6 +6792,7 @@ dependencies = [
     { name = "great-expectations" },
     { name = "gunicorn" },
     { name = "holidays" },
+    { name = "httpx" },
     { name = "lightgbm" },
     { name = "matplotlib" },
     { name = "mlflow" },
@@ -6789,6 +6829,7 @@ requires-dist = [
     { name = "dagster-dbt" },
     { name = "dagster-docker" },
     { name = "dagster-gcp" },
+    { name = "dagster-gcp-pandas" },
     { name = "dagster-mlflow" },
     { name = "dask", extras = ["complete"] },
     { name = "dask-bigquery" },
@@ -6801,6 +6842,7 @@ requires-dist = [
     { name = "great-expectations" },
     { name = "gunicorn" },
     { name = "holidays" },
+    { name = "httpx" },
     { name = "lightgbm" },
     { name = "matplotlib" },
     { name = "mlflow" },

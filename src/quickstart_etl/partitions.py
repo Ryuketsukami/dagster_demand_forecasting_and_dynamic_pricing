@@ -1,3 +1,3 @@
 from dagster import DailyPartitionsDefinition
 
-daily_partitions = DailyPartitionsDefinition(start_date="2026-03-15")
+daily_partitions = DailyPartitionsDefinition(start_date="2020-01-01")

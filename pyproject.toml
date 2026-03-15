@@ -6,6 +6,8 @@ dependencies = [
     "dagster",
     "dagster-cloud",
     "dagster-gcp",
+    "dagster-gcp-pandas",
+    "httpx",
     "dagster-dbt",
     "dagster-mlflow",
     "dagster-docker",

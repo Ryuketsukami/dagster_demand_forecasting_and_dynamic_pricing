@@ -1,5 +1,5 @@
 from dagster import EnvVar
-from dagster_gcp import BigQueryResource
+from dagster_gcp import BigQueryResource, GCSResource
 from dagster_gcp_pandas import BigQueryPandasIOManager
 
 bigquery_resource = BigQueryResource(
@@ -13,3 +13,5 @@ bigquery_io_manager = BigQueryPandasIOManager(
     dataset=EnvVar("BIGQUERY_DATASET"),
     timeout=30.0,
 )
+
+gcs_resource = GCSResource(project=EnvVar("GCP_PROJECT_ID"))

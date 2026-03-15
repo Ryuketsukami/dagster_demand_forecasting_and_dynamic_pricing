@@ -1,14 +1,9 @@
-# from .assets import ingestion, validation, features, training, serving, monitoring
-# from .resources.storage import bigquery_io_manager, gcs_resource
-# from .resources.dask_resource import dask_resource
-# from .resources.mlflow_resource import mlflow_resource
-
 from dagster import Definitions, load_assets_from_modules
 
 from .defs.assets import features, ingestion, monitoring, serving, training, validation
-from .defs.jobs import retrain_job
-from .defs.resources.storage import bigquery_io_manager, bigquery_resource
-from .defs.schedules import daily_schedule, retraining_schedule
+from .defs.jobs import daily_ingestion_job, retrain_job
+from .defs.resources.storage import bigquery_io_manager, bigquery_resource, gcs_resource
+from .defs.schedules import daily_schedule, monitoring_job, monitoring_schedule, retraining_schedule
 from .defs.sensors.drift_sensors import drift_retrain_sensor
 
 all_assets = load_assets_from_modules(
@@ -20,63 +15,9 @@ defs = Definitions(
     resources={
         "bigquery": bigquery_resource,
         "io_manager": bigquery_io_manager,
+        "gcs_resource": gcs_resource,
     },
-    schedules=[daily_schedule, retraining_schedule],
+    schedules=[daily_schedule, retraining_schedule, monitoring_schedule],
     sensors=[drift_retrain_sensor],
-    jobs=[retrain_job],
+    jobs=[daily_ingestion_job, retrain_job, monitoring_job],
 )
-
-
-# from pathlib import Path
-
-# from dagster import (
-#     Definitions,
-#     ScheduleDefinition,
-#     define_asset_job,
-#     graph_asset,
-#     link_code_references_to_git,
-#     op,
-#     with_source_code_references,
-# )
-# from dagster._core.definitions.metadata.source_code import AnchorBasedFilePathMapping
-
-# from .defs.assets import ingestion, validation, features, training, serving, monitoring
-
-# daily_refresh_schedule = ScheduleDefinition(
-#     job=define_asset_job(name="all_assets_job"), cron_schedule="0 0 * * *"
-# )
-
-
-# @op
-# def foo_op():
-#     return 5
-
-
-# @graph_asset
-# def my_asset():
-#     return foo_op()
-
-
-# my_assets = with_source_code_references(
-#     [
-#         my_asset,
-#         topstory_ids,
-#         topstories,
-#         most_frequent_words,
-#     ]
-# )
-
-# my_assets = link_code_references_to_git(
-#     assets_defs=my_assets,
-#     git_url="https://github.com/dagster-io/dagster/",
-#     git_branch="master",
-#     file_path_mapping=AnchorBasedFilePathMapping(
-#         local_file_anchor=Path(__file__).parent,
-#         file_anchor_path_in_repository="examples/quickstart_etl/src/quickstart_etl/",
-#     ),
-# )
-
-# defs = Definitions(
-#     assets=my_assets,
-#     schedules=[daily_refresh_schedule],
-# )
