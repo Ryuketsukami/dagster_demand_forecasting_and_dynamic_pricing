@@ -14,7 +14,7 @@ def test_expected_jobs_exist():
 
 
 def test_expected_assets_exist():
-    asset_keys = {str(a.key) for a in defs.assets}
+    asset_keys = {a.key.to_user_string() for a in defs.assets}
     for expected in [
         "raw_airline_market_data",
         "raw_weather_data",
