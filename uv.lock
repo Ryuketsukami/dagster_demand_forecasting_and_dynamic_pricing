@@ -1038,88 +1038,40 @@ wheels = [
 
 [[package]]
 name = "dagster"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "alembic", marker = "python_full_version < '3.11'" },
-    { name = "antlr4-python3-runtime", marker = "python_full_version < '3.11'" },
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "coloredlogs", marker = "python_full_version < '3.11'" },
-    { name = "dagster-pipes", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-shared", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "docstring-parser", marker = "python_full_version < '3.11'" },
-    { name = "filelock", marker = "python_full_version < '3.11'" },
-    { name = "grpcio", version = "1.75.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "grpcio-health-checking", marker = "python_full_version < '3.11'" },
-    { name = "jinja2", marker = "python_full_version < '3.11'" },
-    { name = "protobuf", marker = "python_full_version < '3.11'" },
-    { name = "psutil", marker = "python_full_version < '3.11' and sys_platform == 'win32'" },
-    { name = "python-dotenv", marker = "python_full_version < '3.11'" },
-    { name = "pytz", marker = "python_full_version < '3.11'" },
-    { name = "pywin32", marker = "python_full_version < '3.11' and sys_platform == 'win32'" },
-    { name = "requests", marker = "python_full_version < '3.11'" },
-    { name = "rich", marker = "python_full_version < '3.11'" },
-    { name = "setuptools", marker = "python_full_version < '3.11'" },
-    { name = "six", marker = "python_full_version < '3.11'" },
-    { name = "sqlalchemy", marker = "python_full_version < '3.11'" },
-    { name = "structlog", marker = "python_full_version < '3.11'" },
-    { name = "tabulate", marker = "python_full_version < '3.11'" },
-    { name = "tomli", marker = "python_full_version < '3.11'" },
-    { name = "toposort", marker = "python_full_version < '3.11'" },
-    { name = "tqdm", marker = "python_full_version < '3.11'" },
-    { name = "tzdata", marker = "python_full_version < '3.11'" },
-    { name = "universal-pathlib", marker = "python_full_version < '3.11'" },
-    { name = "watchdog", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6f/8c/28a46564b9597a58647425ee462a36b4fbe0e18e19e12b07ca465400cd0a/dagster-1.11.11.tar.gz", hash = "sha256:6cc6d97c6895455ee77a4173e03c7313a5504d035896143b25b9418faea2652a", size = 1545878, upload-time = "2025-09-18T20:28:02.919Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/7d/c9/351b09df41dd8a90ae57a5f24bf6aa2713d7620b23f473f4d29789d51a89/dagster-1.11.11-py3-none-any.whl", hash = "sha256:6fa9c4dff13eefb535f2f3b143cdf1db031ad158ca3ed0475a6d3f370d75b21e", size = 1927609, upload-time = "2025-09-18T20:27:59.935Z" },
-]
-
-[[package]]
-name = "dagster"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "alembic", marker = "python_full_version >= '3.11'" },
-    { name = "antlr4-python3-runtime", marker = "python_full_version >= '3.11'" },
+    { name = "alembic" },
+    { name = "antlr4-python3-runtime" },
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "coloredlogs", marker = "python_full_version >= '3.11'" },
-    { name = "dagster-pipes", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-shared", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "docstring-parser", marker = "python_full_version >= '3.11'" },
-    { name = "filelock", marker = "python_full_version >= '3.11'" },
-    { name = "grpcio", version = "1.75.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11' and python_full_version < '3.14'" },
+    { name = "coloredlogs" },
+    { name = "dagster-pipes" },
+    { name = "dagster-shared" },
+    { name = "docstring-parser" },
+    { name = "filelock" },
+    { name = "grpcio", version = "1.75.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14'" },
     { name = "grpcio", version = "1.78.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.14'" },
-    { name = "grpcio-health-checking", marker = "python_full_version >= '3.11'" },
-    { name = "jinja2", marker = "python_full_version >= '3.11'" },
-    { name = "protobuf", marker = "python_full_version >= '3.11'" },
-    { name = "psutil", marker = "python_full_version >= '3.11' and sys_platform == 'win32'" },
-    { name = "python-dotenv", marker = "python_full_version >= '3.11'" },
-    { name = "pytz", marker = "python_full_version >= '3.11'" },
-    { name = "pywin32", marker = "python_full_version >= '3.11' and sys_platform == 'win32'" },
-    { name = "requests", marker = "python_full_version >= '3.11'" },
-    { name = "rich", marker = "python_full_version >= '3.11'" },
-    { name = "setuptools", marker = "python_full_version >= '3.11'" },
-    { name = "six", marker = "python_full_version >= '3.11'" },
-    { name = "sqlalchemy", marker = "python_full_version >= '3.11'" },
-    { name = "structlog", marker = "python_full_version >= '3.11'" },
-    { name = "tabulate", marker = "python_full_version >= '3.11'" },
-    { name = "tomli", marker = "python_full_version >= '3.11'" },
-    { name = "toposort", marker = "python_full_version >= '3.11'" },
-    { name = "tqdm", marker = "python_full_version >= '3.11'" },
-    { name = "tzdata", marker = "python_full_version >= '3.11'" },
-    { name = "universal-pathlib", marker = "python_full_version >= '3.11'" },
-    { name = "watchdog", marker = "python_full_version >= '3.11'" },
+    { name = "grpcio-health-checking" },
+    { name = "jinja2" },
+    { name = "protobuf" },
+    { name = "psutil", marker = "sys_platform == 'win32'" },
+    { name = "python-dotenv" },
+    { name = "pytz" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "setuptools" },
+    { name = "six" },
+    { name = "sqlalchemy" },
+    { name = "structlog" },
+    { name = "tabulate" },
+    { name = "tomli" },
+    { name = "toposort" },
+    { name = "tqdm" },
+    { name = "tzdata" },
+    { name = "universal-pathlib" },
+    { name = "watchdog" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/67/12/0434fe4aa17a417d4feaaab34a149ae598a113cf669b63a2596fbef4e395/dagster-1.12.19.tar.gz", hash = "sha256:b24c2fa06e5fe6198e40cee091714af2ffa931ae42f507eaf2733ded5848c051", size = 3136271, upload-time = "2026-03-12T17:25:47.546Z" }
 wheels = [
@@ -1127,52 +1079,41 @@ wheels = [
 ]
 
 [[package]]
-name = "dagster-cloud-cli"
-version = "1.11.11"
+name = "dagster-cloud"
+version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
 dependencies = [
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-shared", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "github3-py", marker = "python_full_version < '3.11'" },
-    { name = "jinja2", marker = "python_full_version < '3.11'" },
-    { name = "packaging", marker = "python_full_version < '3.11'" },
-    { name = "pyyaml", marker = "python_full_version < '3.11'" },
-    { name = "questionary", marker = "python_full_version < '3.11'" },
-    { name = "requests", marker = "python_full_version < '3.11'" },
-    { name = "setuptools", marker = "python_full_version < '3.11'" },
-    { name = "tomli", marker = "python_full_version < '3.11'" },
-    { name = "typer", marker = "python_full_version < '3.11'" },
+    { name = "dagster" },
+    { name = "dagster-cloud-cli" },
+    { name = "dagster-shared" },
+    { name = "pex" },
+    { name = "questionary" },
+    { name = "requests" },
+    { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2a/6d/aa465c57bd0e554bbf35ba2aed22606f0bc161712a5f3f851c909992b194/dagster_cloud_cli-1.11.11.tar.gz", hash = "sha256:b695e167bbc07b03a8aac5315fdff2e382a3b0e40aad1f77d68aa4aec85c6bea", size = 88663, upload-time = "2025-09-18T20:34:00.707Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/33/af/40ba975992f8a7d15a40252427345c6a9534e99f221bdfd11b4cc4ea828b/dagster_cloud-1.12.19.tar.gz", hash = "sha256:aad2ea10261d3c658ac17520c802ef50a7560b88f692069590976a0a5b4c439f", size = 402830, upload-time = "2026-03-12T17:40:24.264Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8c/7f/a37c64831e7476fb0ae75b50235f1d93c1b97b279422d0b99637268040f0/dagster_cloud_cli-1.11.11-py3-none-any.whl", hash = "sha256:c4925a8e8899674f32b2c4953fa93e2f62c99060a28ad8764364dfc6e5d04d49", size = 109035, upload-time = "2025-09-18T20:33:59.306Z" },
+    { url = "https://files.pythonhosted.org/packages/8c/c9/49434d4440018f2edf4a7781fc26fc238b756284460348bc0c9fa18ad3ac/dagster_cloud-1.12.19-py3-none-any.whl", hash = "sha256:90114b312c67e9e560861e52696296a2c2960e605ecdadad2ea9fa663d9cf033", size = 193538, upload-time = "2026-03-12T17:40:22.676Z" },
 ]
 
 [[package]]
 name = "dagster-cloud-cli"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-shared", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "github3-py", marker = "python_full_version >= '3.11'" },
-    { name = "jinja2", marker = "python_full_version >= '3.11'" },
-    { name = "packaging", marker = "python_full_version >= '3.11'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.11'" },
-    { name = "questionary", marker = "python_full_version >= '3.11'" },
-    { name = "requests", marker = "python_full_version >= '3.11'" },
-    { name = "setuptools", marker = "python_full_version >= '3.11'" },
-    { name = "typer", marker = "python_full_version >= '3.11'" },
-    { name = "validators", marker = "python_full_version >= '3.11'" },
+    { name = "dagster-shared" },
+    { name = "github3-py" },
+    { name = "jinja2" },
+    { name = "packaging" },
+    { name = "pyyaml" },
+    { name = "questionary" },
+    { name = "requests" },
+    { name = "setuptools" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typer" },
+    { name = "validators" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/35/2e/97b44a6240c6709236af0611985b0ea5180ec79637b0efaaba23a56bacae/dagster_cloud_cli-1.12.19.tar.gz", hash = "sha256:916308f746245a977549596cccd3c48ae3d39d0e6628e98ae1e80045496548d7", size = 109320, upload-time = "2026-03-12T17:39:51.723Z" }
 wheels = [
@@ -1181,50 +1122,22 @@ wheels = [
 
 [[package]]
 name = "dagster-dbt"
-version = "0.27.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dbt-core", version = "1.10.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "jinja2", marker = "python_full_version < '3.11'" },
-    { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "orjson", marker = "python_full_version < '3.11'" },
-    { name = "packaging", marker = "python_full_version < '3.11'" },
-    { name = "requests", marker = "python_full_version < '3.11'" },
-    { name = "rich", marker = "python_full_version < '3.11'" },
-    { name = "sqlglot", extra = ["rs"], marker = "python_full_version < '3.11'" },
-    { name = "typer", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/eb/b4/300f536e183a20f43bec57dc242f522af3a5ca273d20da0b79a7041ac97f/dagster_dbt-0.27.11.tar.gz", hash = "sha256:2a77e9f47bfeee36b7f30a85a5cf0e1ed818cd0f1ad1b05c1ca59a817cae0d0a", size = 93868, upload-time = "2025-09-18T20:33:00.935Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/3d/83/122eb3d5b1860f6d7f13ae21a823bec585d6f13ea94b41d63ebb9f60d7eb/dagster_dbt-0.27.11-py3-none-any.whl", hash = "sha256:dd8dd6eff41a916795021c99d00c420d015cf8e2ac96b0375c5629c267a9e290", size = 113369, upload-time = "2025-09-18T20:32:59.556Z" },
-]
-
-[[package]]
-name = "dagster-dbt"
 version = "0.28.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "dbt-core", version = "1.10.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "dbt-core", version = "1.11.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "gitpython", marker = "python_full_version >= '3.11'" },
-    { name = "jinja2", marker = "python_full_version >= '3.11'" },
+    { name = "gitpython" },
+    { name = "jinja2" },
+    { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "networkx", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "orjson", marker = "python_full_version >= '3.11'" },
-    { name = "packaging", marker = "python_full_version >= '3.11'" },
-    { name = "requests", marker = "python_full_version >= '3.11'" },
-    { name = "rich", marker = "python_full_version >= '3.11'" },
-    { name = "sqlglot", extra = ["rs"], marker = "python_full_version >= '3.11'" },
-    { name = "typer", marker = "python_full_version >= '3.11'" },
+    { name = "orjson" },
+    { name = "packaging" },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "sqlglot", extra = ["rs"] },
+    { name = "typer" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d7/29/9fb8ccfd0b4eb42eb76555e3f2133a0e0f9e1bc1ea84925ecdf8569d01a0/dagster_dbt-0.28.19.tar.gz", hash = "sha256:c8a0c38e9827433445a8cc3a51a5a64d7ec82cb74c95415f4f04fa04c7f3f904", size = 414209, upload-time = "2026-03-12T17:37:55.739Z" }
 wheels = [
@@ -1233,37 +1146,13 @@ wheels = [
 
 [[package]]
 name = "dagster-dg-cli"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-cloud-cli", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-dg-core", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "typer", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9f/37/02c4e1b1ab4279211e75954b8cb4c4222d52ef689d0332155f0abdda4527/dagster_dg_cli-1.11.11.tar.gz", hash = "sha256:254b7d5402e5324a1dec24d0fb3783167973dda98be25405f083a2955addf7da", size = 598107, upload-time = "2025-09-18T20:32:57.55Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/7a/e3/230948a72eae5f24ab346ec7c92cb593129421f8f904d9b87855498f150d/dagster_dg_cli-1.11.11-py3-none-any.whl", hash = "sha256:ef27ee9208af2e8d97f1e75c8328b8e9b281a7b906a7def7de17db5035554b25", size = 652167, upload-time = "2025-09-18T20:32:56.337Z" },
-]
-
-[[package]]
-name = "dagster-dg-cli"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-cloud-cli", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-dg-core", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "typer", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "dagster-cloud-cli" },
+    { name = "dagster-dg-core" },
+    { name = "typer" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e3/14/73145bd13a932c1ffebe8cefeafb76ed041d7753e0c6e579475834e74a05/dagster_dg_cli-1.12.19.tar.gz", hash = "sha256:fdd3231a3bdf9e898b5b1bb58757c4ba4f46d695e0dfab2026932e9c331b67f2", size = 287362, upload-time = "2026-03-12T17:34:42.693Z" }
 wheels = [
@@ -1272,65 +1161,28 @@ wheels = [
 
 [[package]]
 name = "dagster-dg-core"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "click-aliases", marker = "python_full_version < '3.11'" },
-    { name = "dagster-cloud-cli", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-shared", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "gql", extra = ["requests"], marker = "python_full_version < '3.11'" },
-    { name = "jinja2", marker = "python_full_version < '3.11'" },
-    { name = "jsonschema", marker = "python_full_version < '3.11'" },
-    { name = "markdown", marker = "python_full_version < '3.11'" },
-    { name = "packaging", marker = "python_full_version < '3.11'" },
-    { name = "python-dotenv", marker = "python_full_version < '3.11'" },
-    { name = "pyyaml", marker = "python_full_version < '3.11'" },
-    { name = "rich", marker = "python_full_version < '3.11'" },
-    { name = "setuptools", marker = "python_full_version < '3.11'" },
-    { name = "tomlkit", marker = "python_full_version < '3.11'" },
-    { name = "typer", marker = "python_full_version < '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
-    { name = "watchdog", marker = "python_full_version < '3.11'" },
-    { name = "yaspin", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c9/62/da354609c4fd8a4e72ac33124f04f4c9fe9aae4523a042a72bc3fa2ea498/dagster_dg_core-1.11.11.tar.gz", hash = "sha256:e0e7a0ce287512f6f5fd2b35f3a74eceed70d1b7fcce104af9c50acef63c9c1b", size = 40638, upload-time = "2025-09-18T20:32:34.2Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/f8/f0222e6b8ed44f850f86caecbe8b2975e2218ad1140d4127b7805708ebe7/dagster_dg_core-1.11.11-py3-none-any.whl", hash = "sha256:467747dceb4d398e2a4ca8d363058cab4148ef20861a7270bca947124ffcc6b1", size = 46569, upload-time = "2025-09-18T20:32:33.251Z" },
-]
-
-[[package]]
-name = "dagster-dg-core"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "click-aliases", marker = "python_full_version >= '3.11'" },
-    { name = "dagster-cloud-cli", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-shared", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "gql", extra = ["requests"], marker = "python_full_version >= '3.11'" },
-    { name = "jinja2", marker = "python_full_version >= '3.11'" },
-    { name = "jsonschema", marker = "python_full_version >= '3.11'" },
-    { name = "markdown", marker = "python_full_version >= '3.11'" },
-    { name = "packaging", marker = "python_full_version >= '3.11'" },
-    { name = "python-dotenv", marker = "python_full_version >= '3.11'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.11'" },
-    { name = "rich", marker = "python_full_version >= '3.11'" },
-    { name = "setuptools", marker = "python_full_version >= '3.11'" },
-    { name = "tomlkit", marker = "python_full_version >= '3.11'" },
-    { name = "typer", marker = "python_full_version >= '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.11'" },
-    { name = "watchdog", marker = "python_full_version >= '3.11'" },
-    { name = "yaspin", marker = "python_full_version >= '3.11'" },
+    { name = "click-aliases" },
+    { name = "dagster-cloud-cli" },
+    { name = "dagster-shared" },
+    { name = "gql", extra = ["requests"] },
+    { name = "jinja2" },
+    { name = "jsonschema" },
+    { name = "markdown" },
+    { name = "packaging" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+    { name = "rich" },
+    { name = "setuptools" },
+    { name = "tomlkit" },
+    { name = "typer" },
+    { name = "typing-extensions" },
+    { name = "watchdog" },
+    { name = "yaspin" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bf/81/a79fe2945e6d9b76c1bd528ca9a58eb3c67593b02f7c35a96f2625b949a9/dagster_dg_core-1.12.19.tar.gz", hash = "sha256:511873be97390e7e61fb6a713dfc4b4c47f248b43a407cd2acee0c27cd446e8a", size = 46106, upload-time = "2026-03-12T17:38:12.818Z" }
 wheels = [
@@ -1339,35 +1191,12 @@ wheels = [
 
 [[package]]
 name = "dagster-docker"
-version = "0.27.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "docker", marker = "python_full_version < '3.11'" },
-    { name = "docker-image-py", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/3f/4f/7d2b6aef4e07f9125a0631994e10697c1fedaa6a8fb266253feddf5a2a52/dagster_docker-0.27.11.tar.gz", hash = "sha256:c168cf33d2b6adc91e96edf5713b257362c0c6574bfb531e429f69c54b64e8af", size = 16279, upload-time = "2025-09-18T20:34:31.682Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/01/66/a93ed3e5a72298ce9c671883981a298a71e4324236e0169e44cedd527204/dagster_docker-0.27.11-py3-none-any.whl", hash = "sha256:76f8dbe81a471ab0c877a98729666e0c37afd9bbb7747c6d962f272866d489ac", size = 19673, upload-time = "2025-09-18T20:34:30.712Z" },
-]
-
-[[package]]
-name = "dagster-docker"
 version = "0.28.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "docker", marker = "python_full_version >= '3.11'" },
-    { name = "docker-image-py", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "docker" },
+    { name = "docker-image-py" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/58/53/ba885a8e9d6485178beb693f2b34dd6b461b78e975c1464ca1e26d2efd20/dagster_docker-0.28.19.tar.gz", hash = "sha256:1cd01dded3d4325224dff73b69035f8569b717d2e0752155da0ee4e61630ee65", size = 23513, upload-time = "2026-03-12T17:36:05.993Z" }
 wheels = [
@@ -1376,43 +1205,16 @@ wheels = [
 
 [[package]]
 name = "dagster-gcp"
-version = "0.27.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-pandas", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "db-dtypes", marker = "python_full_version < '3.11'" },
-    { name = "google-api-python-client", marker = "python_full_version < '3.11'" },
-    { name = "google-cloud-bigquery", marker = "python_full_version < '3.11'" },
-    { name = "google-cloud-storage", marker = "python_full_version < '3.11'" },
-    { name = "oauth2client", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/eb/c4/c4cc8a1eb816c6e03cb2042b5f591198f18327da22bae4ab6a5cc54dab6b/dagster_gcp-0.27.11.tar.gz", hash = "sha256:bf7de98ae4424867218390774b571a6a59c61046a2a744af2f99d180aba0e639", size = 55273, upload-time = "2025-09-18T20:34:23.81Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f2/ad/fad9597bf41d51b33df55111501caec24e58beab10d7731b41497de8010e/dagster_gcp-0.27.11-py3-none-any.whl", hash = "sha256:9a051a86a427c0401aeac67203b9c386b673a27b29bac0b7436ef7d58ad11c35", size = 64844, upload-time = "2025-09-18T20:34:22.311Z" },
-]
-
-[[package]]
-name = "dagster-gcp"
 version = "0.28.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-pandas", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "db-dtypes", marker = "python_full_version >= '3.11'" },
-    { name = "google-api-python-client", marker = "python_full_version >= '3.11'" },
-    { name = "google-cloud-bigquery", marker = "python_full_version >= '3.11'" },
-    { name = "google-cloud-storage", marker = "python_full_version >= '3.11'" },
-    { name = "oauth2client", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "dagster-pandas" },
+    { name = "db-dtypes" },
+    { name = "google-api-python-client" },
+    { name = "google-cloud-bigquery" },
+    { name = "google-cloud-storage" },
+    { name = "oauth2client" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/45/86/830668f45a988c7effaf2a815e44e1c8494b3001f822cb7cbd89cd569e67/dagster_gcp-0.28.19.tar.gz", hash = "sha256:9b581a557dd09335ef3ffdfbe4d1db0050edfd9d94e8042743772c8a3d80214c", size = 74797, upload-time = "2026-03-12T17:33:33.433Z" }
 wheels = [
@@ -1421,35 +1223,12 @@ wheels = [
 
 [[package]]
 name = "dagster-gcp-pandas"
-version = "0.27.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-gcp", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "pandas", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/36/47/747b75c632f08c4275f3c8e19f61807a0c0576c22c28c618d01650ef4f99/dagster_gcp_pandas-0.27.11.tar.gz", hash = "sha256:a141fbb31d50ab7678aa9978252eb6181127a19ffbf5a06e0b17f0cb9779dbf3", size = 8647, upload-time = "2025-09-18T20:34:12.238Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c2/8a/d9531bae8185bdb40023c3993edad37c9e74ef47c29dfe7e5a3713306c61/dagster_gcp_pandas-0.27.11-py3-none-any.whl", hash = "sha256:480394f309c48fc7d067dbfd08bc82a87ae30f1bdbc68b39c88451d3403167a5", size = 9418, upload-time = "2025-09-18T20:34:11.418Z" },
-]
-
-[[package]]
-name = "dagster-gcp-pandas"
 version = "0.28.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-gcp", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pandas", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "dagster-gcp" },
+    { name = "pandas" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f6/f5/f6ce4ebb42be4246a54862006d4d0d52d7cb453a51eb54e5fe6b5f83fc31/dagster_gcp_pandas-0.28.19.tar.gz", hash = "sha256:384ceb90bd3c6e4e67b1cf181aa4d36dff932f33e535b129eb8d8f9147df94ab", size = 11986, upload-time = "2026-03-12T17:35:42.413Z" }
 wheels = [
@@ -1458,39 +1237,14 @@ wheels = [
 
 [[package]]
 name = "dagster-graphql"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "gql", extra = ["requests"], marker = "python_full_version < '3.11'" },
-    { name = "graphene", marker = "python_full_version < '3.11'" },
-    { name = "requests", marker = "python_full_version < '3.11'" },
-    { name = "starlette", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/cd/47/48c75babddd2457005767fe9b45bf4f2e560f3c6b72d45b47e357aa889c8/dagster_graphql-1.11.11.tar.gz", hash = "sha256:8575cbca0f161e8605b9a9e436da25d21609075696f7f6744ab02742639c839f", size = 155536, upload-time = "2025-09-18T20:28:13.213Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/20/8032bbd2fecf62fda7fd5739faf4db2aec3366d9b08c72b8b2f93bfb6541/dagster_graphql-1.11.11-py3-none-any.whl", hash = "sha256:4b74057ec7af768a2c61a530d46bd9ae67ee9715578a0109e6f4e01db3c52e58", size = 202513, upload-time = "2025-09-18T20:28:11.143Z" },
-]
-
-[[package]]
-name = "dagster-graphql"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "gql", extra = ["requests"], marker = "python_full_version >= '3.11'" },
-    { name = "graphene", marker = "python_full_version >= '3.11'" },
-    { name = "requests", marker = "python_full_version >= '3.11'" },
-    { name = "starlette", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "gql", extra = ["requests"] },
+    { name = "graphene" },
+    { name = "requests" },
+    { name = "starlette" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fa/8d/be28eccf881d6487317b1a8669dbed2314df1412cb58da267bbecb9e7d21/dagster_graphql-1.12.19.tar.gz", hash = "sha256:223857babe9a6460f363cdf87eb13d6ebac5583fed53af4e0ecd04b0ffabf6f1", size = 464322, upload-time = "2026-03-12T17:26:13.352Z" }
 wheels = [
@@ -1499,37 +1253,13 @@ wheels = [
 
 [[package]]
 name = "dagster-mlflow"
-version = "0.27.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "mlflow", marker = "python_full_version < '3.11'" },
-    { name = "pandas", marker = "python_full_version < '3.11'" },
-    { name = "protobuf", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/22/f4/532a94489a15fd34eda6ba26f36ca7e355515c6dc94a654a919d7fcf9f30/dagster_mlflow-0.27.11.tar.gz", hash = "sha256:5292f637d65aa5da2982d0e49934398c500d6153e3c3c9483aa60b96f3410558", size = 10187, upload-time = "2025-09-18T20:33:34.741Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6b/fb/cb6c573ad2c4fc94078e1bb53816d9c15b71d9c9dd8187d50094bcc18bcd/dagster_mlflow-0.27.11-py3-none-any.whl", hash = "sha256:eab93d952645b67f4af9feba53100aa212581efa48fdbaa8d47f56747f467422", size = 10912, upload-time = "2025-09-18T20:33:33.787Z" },
-]
-
-[[package]]
-name = "dagster-mlflow"
 version = "0.28.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "mlflow", marker = "python_full_version >= '3.11'" },
-    { name = "pandas", marker = "python_full_version >= '3.11'" },
-    { name = "protobuf", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "mlflow" },
+    { name = "pandas" },
+    { name = "protobuf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9d/5d/5507c7f39ed0ba53089dd0df0cbfc6584d3f8ff59088aa81ff3546fde157/dagster_mlflow-0.28.19.tar.gz", hash = "sha256:2041a7831fd7baae6b20cb03995f50a87f1989fed6310bbfb6bbeea668b673ca", size = 14286, upload-time = "2026-03-12T17:34:26.367Z" }
 wheels = [
@@ -1538,33 +1268,11 @@ wheels = [
 
 [[package]]
 name = "dagster-pandas"
-version = "0.27.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "pandas", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c9/ed/211b1f6c719c460bd31760d793f9a51c049f71f98e1c756ba4279121e4bf/dagster_pandas-0.27.11.tar.gz", hash = "sha256:aa8774f59666163bcff67abbe9e38e3aa626cbc3da0465b099744aefd0a16d7b", size = 21272, upload-time = "2025-09-18T20:34:17.587Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/82/25/2c33559ea0604ff7c288b572d11e24ccb4fdc77317615ca8afcb624fe0d6/dagster_pandas-0.27.11-py3-none-any.whl", hash = "sha256:94e8b3b48dad70585bc55d2ec959dec9f95e88bdd8200928b125facee90bf4f2", size = 24551, upload-time = "2025-09-18T20:34:16.559Z" },
-]
-
-[[package]]
-name = "dagster-pandas"
 version = "0.28.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pandas", marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "pandas" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/93/b7/6915d4bc57ed7e0678d6694f0195aec0ea4b5dddefd2cc75cb82c1f92864/dagster_pandas-0.28.19.tar.gz", hash = "sha256:b7cccfea2126ab66802e3f0ab14c68f1540321c09ca4da6a2cae9b1f21f38135", size = 32083, upload-time = "2026-03-12T17:38:50.846Z" }
 wheels = [
@@ -1573,26 +1281,8 @@ wheels = [
 
 [[package]]
 name = "dagster-pipes"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-sdist = { url = "https://files.pythonhosted.org/packages/eb/77/32f92dc0214508ec2bcc6306cece6b1602b8e27e2d3e528a27c7b8c2fe88/dagster_pipes-1.11.11.tar.gz", hash = "sha256:fa05b0db42a5adca05dd4c3e3397e06a1174ccc3252a620e41a0e2ab43da9bd4", size = 20861, upload-time = "2025-09-18T20:28:09.29Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/50/30/0e6fab0d9f20aea9414df40e4d5cdb57f815d515cb1c69f4d41e4b0ccf0f/dagster_pipes-1.11.11-py3-none-any.whl", hash = "sha256:6eaa352f5a901d8e0c0e5c61e5969af59713936bc13de2a87f5abd77e63d8a82", size = 20622, upload-time = "2025-09-18T20:28:08.398Z" },
-]
-
-[[package]]
-name = "dagster-pipes"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 sdist = { url = "https://files.pythonhosted.org/packages/7f/8f/ee47f5034140f465a6b8564dbbdc598d46fc48fc455372138829cfa8df01/dagster_pipes-1.12.19.tar.gz", hash = "sha256:4c71dd9105a3641d19a2f7cd6526e2ca381f71c8616410d2023028551450a138", size = 23397, upload-time = "2026-03-12T17:26:04.451Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5b/1c/f3e64e984dd3a9d0a2f2cb78a3bba6d2a025d392c2d926b218bf2690fbf9/dagster_pipes-1.12.19-py3-none-any.whl", hash = "sha256:2aace16e33a41a23cdfc58a594116925e974c211378b59841a141c15da9295b2", size = 20538, upload-time = "2026-03-12T17:26:03.313Z" },
@@ -1600,40 +1290,15 @@ wheels = [
 
 [[package]]
 name = "dagster-shared"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "packaging", marker = "python_full_version < '3.11'" },
-    { name = "pydantic", marker = "python_full_version < '3.11'" },
-    { name = "pyyaml", marker = "python_full_version < '3.11'" },
-    { name = "tomlkit", marker = "python_full_version < '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/38/13/36dfe15c597ae0c0339fa81d4a2315358f5fe30ce4a08000cacf41db9459/dagster_shared-1.11.11.tar.gz", hash = "sha256:28cc61b258b5c3e56ebb79119e641cf15315a54c9a8610d64069bec3cfa84222", size = 77355, upload-time = "2025-09-18T20:32:51.283Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e0/d9/5f0127c0a61a9e106f0b905e91e78a14aced5697a4a2489907a5c9f6b1a6/dagster_shared-1.11.11-py3-none-any.whl", hash = "sha256:24e9d63822c8478c45493ea94fd9945a66f6a2b49af81864ad0431d621181afa", size = 90518, upload-time = "2025-09-18T20:32:50.13Z" },
-]
-
-[[package]]
-name = "dagster-shared"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
-    { name = "packaging", marker = "python_full_version >= '3.11'" },
-    { name = "platformdirs", marker = "python_full_version >= '3.11'" },
-    { name = "pydantic", marker = "python_full_version >= '3.11'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.11'" },
-    { name = "tomlkit", marker = "python_full_version >= '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.11'" },
+    { name = "packaging" },
+    { name = "platformdirs" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "tomlkit" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/93/94/84ad200a145761f0909200c213e1d9fe67c3bd95b36c400bffab73f5d2ed/dagster_shared-1.12.19.tar.gz", hash = "sha256:e49f98a9bd3ab989c0514087c7e6586e7b4ed85577d69efff1379ae134a01e17", size = 92774, upload-time = "2026-03-12T17:32:48.066Z" }
 wheels = [
@@ -1642,39 +1307,15 @@ wheels = [
 
 [[package]]
 name = "dagster-webserver"
-version = "1.11.11"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.11'",
-]
-dependencies = [
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-graphql", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "starlette", marker = "python_full_version < '3.11'" },
-    { name = "uvicorn", extra = ["standard"], marker = "python_full_version < '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6e/ae/53c3727b9f5d08cdc3d865961514ddc24418a0c2d5cc5dbab83bd68eac13/dagster_webserver-1.11.11.tar.gz", hash = "sha256:941a22a03c3881ce2524beac0ba82dfd7885bdd785a276effffc048e316a62c8", size = 12432314, upload-time = "2025-09-18T20:31:45.537Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/55/4f/f79123f788940b33b35343a39953e26cbceb193d2b9a4e182a90204a6aee/dagster_webserver-1.11.11-py3-none-any.whl", hash = "sha256:2bec60b79457a822cd61e6bf16a349a1f40a46c980cc3be5cedf27b547045688", size = 12772661, upload-time = "2025-09-18T20:31:42.997Z" },
-]
-
-[[package]]
-name = "dagster-webserver"
 version = "1.12.19"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14'",
-    "python_full_version == '3.13.*'",
-    "python_full_version == '3.12.*'",
-    "python_full_version == '3.11.*'",
-]
 dependencies = [
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-graphql", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "starlette", marker = "python_full_version >= '3.11'" },
-    { name = "uvicorn", extra = ["standard"], marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "dagster-graphql" },
+    { name = "starlette" },
+    { name = "uvicorn", extra = ["standard"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b3/1d/316f139905aeaa37ec97f33bfa394f102bd3528224238e9fa47a69c666ed/dagster_webserver-1.12.19.tar.gz", hash = "sha256:89e04cf3cf98039108b4b86b60c8d84925f91c586decdc1723eb776399aff36f", size = 11926783, upload-time = "2026-03-12T17:31:34.486Z" }
 wheels = [
@@ -5666,6 +5307,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pex"
+version = "2.59.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/91/35/6bfd6677428fa0c3aec43d05760854ec9b0a054f0e456665903b1a08098f/pex-2.59.5.tar.gz", hash = "sha256:3bcad71f7dd2df47f9b4dd0dea5d837fe4d9d2792b79fd34726c00bfd5f05923", size = 5136890, upload-time = "2025-10-09T04:19:06.255Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/96/eb/80e9012146f6dbba4e1b3dae8b45c771b459fc1615e17e80b1f322794d7c/pex-2.59.5-py2.py3-none-any.whl", hash = "sha256:b9dba4f05b6be08da89b0c54f4bc75ed01c32dfde8ee06f87e82b3a6c69ee388", size = 3873314, upload-time = "2025-10-09T04:19:04.123Z" },
+]
+
+[[package]]
 name = "pillow"
 version = "11.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -6661,18 +6311,13 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "boto3" },
-    { name = "dagster", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-dbt", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-dbt", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-docker", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-docker", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-gcp", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-gcp", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-gcp-pandas", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-gcp-pandas", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-mlflow", version = "0.27.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-mlflow", version = "0.28.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "dagster" },
+    { name = "dagster-cloud" },
+    { name = "dagster-dbt" },
+    { name = "dagster-docker" },
+    { name = "dagster-gcp" },
+    { name = "dagster-gcp-pandas" },
+    { name = "dagster-mlflow" },
     { name = "dask", extra = ["complete"] },
     { name = "dask-bigquery" },
     { name = "evidently" },
@@ -6703,10 +6348,8 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "dagster-dg-cli", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-dg-cli", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "dagster-webserver", version = "1.11.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "dagster-webserver", version = "1.12.19", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "dagster-dg-cli" },
+    { name = "dagster-webserver" },
     { name = "dvc", extra = ["gs"] },
     { name = "pre-commit" },
     { name = "pytest" },
@@ -6717,6 +6360,7 @@ dev = [
 requires-dist = [
     { name = "boto3" },
     { name = "dagster" },
+    { name = "dagster-cloud" },
     { name = "dagster-dbt" },
     { name = "dagster-docker" },
     { name = "dagster-gcp" },

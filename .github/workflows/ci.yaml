@@ -1,4 +1,4 @@
-name: CI
+name: CI / CD
 
 on:
   push:
@@ -16,8 +16,11 @@ concurrency:
 
 env:
   PYTHON_VERSION: "3.10"
-  # Image is pushed to GitHub Container Registry (free, no extra credentials needed)
+  # Docker image pushed to GitHub Container Registry (free, no extra credentials needed)
   IMAGE: ghcr.io/${{ github.repository }}
+  # Dagster Cloud — used only by the deploy job (main branch only)
+  DAGSTER_CLOUD_URL: https://mevmav.eu.dagster.cloud/
+  DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
 
 jobs:
   # ── 1. Lint ────────────────────────────────────────────────────────────────
@@ -79,7 +82,7 @@ jobs:
           BIGQUERY_DATASET: "test_dataset"
           BIGQUERY_LOCATION: "US"
 
-  # ── 3. Validate definitions ────────────────────────────────────────────────
+  # ── 3. Validate Dagster definitions ────────────────────────────────────────
   validate-definitions:
     name: Validate Dagster Definitions
     runs-on: ubuntu-22.04
@@ -117,6 +120,8 @@ jobs:
           BIGQUERY_LOCATION: "EU"
 
   # ── 4. Build & push Docker image ───────────────────────────────────────────
+  # Runs on every branch so branch images are available for Dagster+ branch deployments.
+  # The deploy job below gates actual promotion to main only.
   docker:
     name: Build & Push Docker Image
     runs-on: ubuntu-22.04
@@ -164,14 +169,13 @@ jobs:
           cache-to: type=gha,mode=max
 
   # ── 5. Deploy to Dagster+ (main branch only) ───────────────────────────────
+  # Uses dagster-cloud-cli to register the GHCR image we built above with Dagster Cloud.
+  # This bypasses the PEX builder entirely — correct for custom-Dockerfile deployments.
   deploy:
     name: Deploy to Dagster+
     runs-on: ubuntu-22.04
     needs: docker
     if: github.ref == 'refs/heads/main'
-    env:
-      DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
-      DAGSTER_CLOUD_URL: https://mevmav.eu.dagster.cloud/
     steps:
       - uses: actions/checkout@v4
 
@@ -187,13 +191,14 @@ jobs:
         run: uv tool install dagster-cloud-cli
 
       - name: Initialise Dagster Cloud CI deployment
-        run: dagster-cloud ci init --deployment prod
+        run: dagster-cloud ci init --deployment prod --statedir /tmp/build
 
       - name: Register Docker image with code location
         run: >
           dagster-cloud ci set-build-output
           --location-name portfolio_demand_forecasting_and_dynamic_pricing
           --image-tag ${{ env.IMAGE }}:sha-${{ github.sha }}
+          --statedir /tmp/build
 
       - name: Deploy
-        run: dagster-cloud ci deploy
+        run: dagster-cloud ci deploy --statedir /tmp/build
