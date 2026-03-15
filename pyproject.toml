@@ -36,6 +36,7 @@ dependencies = [
     "pre-commit", # git hooks for linting and formatting
     "ruff", # linter and formatter
     "dvc[gs]", # data version control with Google Cloud Storage support
+    "yfinance",
 ]
 
 # Gcloud CLI
@@ -44,6 +45,7 @@ dependencies = [
 # grafana (docker or gcp marketplace)
 # github-actions (for CI/CD)
 # terraform (for infrastructure as code)
+# we should run uv sync every time we add something here to keep dependencies up to date
 
 
 [dependency-groups]
@@ -56,6 +58,9 @@ dev = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/quickstart_etl"]
 
 [tool.dagster]
 module_name = "quickstart_etl.definitions"

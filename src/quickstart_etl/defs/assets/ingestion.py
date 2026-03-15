@@ -6,127 +6,36 @@
 # import matplotlib.pyplot as plt
 # import pandas as pd
 # import requests
-# from dagster import AssetExecutionContext, MaterializeResult, MetadataValue, asset
 
-from dagster import asset
-
-from quickstart_etl.partitions import partitions_def
-
-
-# Downloads raw airline/demand data from public API or CSV and stores in GCS bucket. Returns a reference to the GCS path.
-@asset(group_name="ingestion", kinds=["python", "raw", "gcs", "api"], partitions_def=partitions_def)
-def raw_flight_data() -> None:
-    return None
-
-
-# Ingests external data: holiday calendars, historical weather, currency rates, stores in GCS nbucket. Returns a reference to the GCS path.
-@asset(group_name="ingestion", kinds=["python", "raw", "gcs", "api"], partitions_def=partitions_def)
-def raw_external_signals() -> None:
-    return None
-
-
-# Loads raw flight data from GCS into BigQuery Bronze table, Uses dagster-gcp BigQuery IO manager. Returns a reference to the BigQuery table.
-@asset(
-    group_name="ingestion",
-    kinds=["python", "raw", "gcs", "api", "bigquery", "io-manager"],
-    partitions_def=partitions_def,
+from dagster import (
+    MaterializeResult,
+    asset,
 )
-def bronze_flights() -> None:
-    return None
+
+from quickstart_etl.partitions import daily_partitions
+
+# kinds=["python", "gcs", "api", "bigquery", "io-manager"],
 
 
-# Loads raw external signals from GCS into BigQuery Bronze table, Uses dagster-gcp BigQuery IO manager. Returns a reference to the BigQuery table.
-@asset(
-    group_name="ingestion",
-    kinds=["python", "raw", "gcs", "api", "bigquery", "io-manager"],
-    partitions_def=partitions_def,
-)
-def bronze_external() -> None:
-    return None
+@asset(group_name="ingestion", partitions_def=daily_partitions)
+def raw_airline_market_data(context) -> MaterializeResult:
+    """Pull daily OHLCV for airline tickers from Yahoo Finance."""
+    # DAL (Delta), UAL (United), AAL (American), LUV (Southwest)
+    # These are Fetcherr's actual customers / industry
+    ...
 
 
-# @asset(group_name="ingestion", kinds=["python"])
-# def raw_flight_data() -> None:
-#     """Get up to 100 top stories from the HackerNews topstories endpoint.
-
-#     API Docs: https://github.com/HackerNews/API#new-top-and-best-stories
-#     """
-#     newstories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
-#     top_new_story_ids = requests.get(newstories_url).json()[:100]
-
-#     os.makedirs("data", exist_ok=True)
-#     with open("data/topstory_ids.json", "w") as f:
-#         json.dump(top_new_story_ids, f)
+@asset(group_name="ingestion", partitions_def=daily_partitions)
+def raw_weather_data(context) -> MaterializeResult:
+    """Pull daily weather for major airline hub cities from Open-Meteo."""
+    # ATL, LAX, ORD, DFW, JFK — temperature, precipitation, wind
+    # External signal, just like Fetcherr ingests weather
+    ...
 
 
-# @asset(deps=[topstory_ids], group_name="hackernews", compute_kind="HackerNews API")
-# def topstories(context: AssetExecutionContext) -> MaterializeResult:
-#     """Get items based on story ids from the HackerNews items endpoint. It may take 30 seconds to fetch all 100 items.
-
-#     API Docs: https://github.com/HackerNews/API#items
-#     """
-#     with open("data/topstory_ids.json") as f:
-#         topstory_ids = json.load(f)
-
-#     results = []
-#     for item_id in topstory_ids:
-#         item = requests.get(f"https://hacker-news.firebaseio.com/v0/item/{item_id}.json").json()
-#         results.append(item)
-
-#         if len(results) % 20 == 0:
-#             context.log.info(f"Got {len(results)} items so far.")
-
-#     df = pd.DataFrame(results)
-#     df.to_csv("data/topstories.csv")
-
-#     return MaterializeResult(
-#         metadata={
-#             "num_records": len(df),  # Metadata can be any key-value pair
-#             "preview": MetadataValue.md(str(df.head().to_markdown())),
-#             # The `MetadataValue` class has useful static methods to build Metadata
-#         }
-#     )
-
-
-# @asset(deps=[topstories], group_name="hackernews", compute_kind="Plot")
-# def most_frequent_words(context: AssetExecutionContext) -> MaterializeResult:
-#     """Get the top 25 most frequent words in the titles of the top 100 HackerNews stories."""
-#     stopwords = ["a", "the", "an", "of", "to", "in", "for", "and", "with", "on", "is"]
-
-#     topstories = pd.read_csv("data/topstories.csv")
-
-#     # loop through the titles and count the frequency of each word
-#     word_counts = {}
-#     for raw_title in topstories["title"]:
-#         title = raw_title.lower()
-#         for word in title.split():
-#             cleaned_word = word.strip(".,-!?:;()[]'\"-")
-#             if cleaned_word not in stopwords and len(cleaned_word) > 0:
-#                 word_counts[cleaned_word] = word_counts.get(cleaned_word, 0) + 1
-
-#     # Get the top 25 most frequent words
-#     top_words = {
-#         pair[0]: pair[1]
-#         for pair in sorted(word_counts.items(), key=lambda x: x[1], reverse=True)[:25]
-#     }
-
-#     # Make a bar chart of the top 25 words
-#     plt.figure(figsize=(10, 6))
-#     plt.bar(list(top_words.keys()), list(top_words.values()))
-#     plt.xticks(rotation=45, ha="right")
-#     plt.title("Top 25 Words in Hacker News Titles")
-#     plt.tight_layout()
-
-#     # Convert the image to a saveable format
-#     buffer = BytesIO()
-#     plt.savefig(buffer, format="png")
-#     image_data = base64.b64encode(buffer.getvalue())
-
-#     # Convert the image to Markdown to preview it within Dagster
-#     md_content = f"![img](data:image/png;base64,{image_data.decode()})"
-
-#     with open("data/most_frequent_words.json", "w") as f:
-#         json.dump(top_words, f)
-
-#     # Attach the Markdown content as metadata to the asset
-#     return MaterializeResult(metadata={"plot": MetadataValue.md(md_content)})
+@asset(group_name="ingestion", partitions_def=daily_partitions)
+def raw_currency_rates(context) -> MaterializeResult:
+    """Pull daily USD exchange rates from Frankfurter API."""
+    # EUR, GBP, BRL, MAD — currencies of Fetcherr's airline partners
+    # (Virgin Atlantic = GBP, Azul = BRL, Royal Air Maroc = MAD)
+    ...
