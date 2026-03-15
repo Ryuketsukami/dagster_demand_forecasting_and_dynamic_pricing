@@ -77,6 +77,7 @@ def _download(gcs_client, bucket_name: str, blob_path: str) -> bytes | None:
 
 @asset(
     group_name="training",
+    deps=["gold_features"],
     kinds=["python", "bigquery", "gcs"],
 )
 def training_dataset(

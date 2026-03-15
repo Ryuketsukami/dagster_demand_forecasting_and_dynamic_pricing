@@ -1,6 +1,6 @@
 # Airline Stock Movement Forecasting Pipeline
 
-A production-grade ML pipeline built with **Dagster** that predicts next-day percentage returns for four US airline stocks — DAL, UAL, AAL, LUV — by fusing market data, weather signals, and currency rates into a LightGBM regression model.
+A production-grade ML pipeline built with **Dagster** that predicts next-day percentage returns for four US airline stocks — DAL, UAL, AAL, LUV — by fusing market data, weather signals, and currency rates into a gradient boosted regression model.
 
 ---
 
@@ -30,7 +30,7 @@ Frankfurter FX   →  currency/               silver_currency
 Gold (BigQuery)        Training (GCS)         Serving                 Monitoring (GCS)
 ───────────────        ──────────────         ───────────             ────────────────
 gold_features    →  train/val/test splits  →  champion/model.pkl  →  drift_report.json
-                 →  model.pkl (latest)     →  FastAPI /predict    →  drift_retrain_sensor
+                 →  models/latest/         →  FastAPI /predict    →  drift_retrain_sensor
                  →  eval_report.json       →  serving_config.json →  retrain_job trigger
                  →  champion/ (promoted)
 ```
@@ -44,7 +44,7 @@ gold_features    →  train/val/test splits  →  champion/model.pkl  →  drift
 | **Gold** | BigQuery (partitioned by date × ticker) | 60+ engineered features ready for model consumption. |
 | **Training** | GCS (model artifacts) | Chronological splits, Optuna HPO, champion promotion. |
 | **Serving** | GCS config + FastAPI process | Real-time predictions from the champion model. |
-| **Monitoring** | GCS JSON reports | Daily drift detection; triggers weekly retrains on demand. |
+| **Monitoring** | GCS JSON reports | Daily drift detection; triggers retrains on demand. |
 
 ---
 
@@ -82,26 +82,27 @@ Each ticker gets the full hub-city weather signal: `{city}_{temp_max|temp_min|pr
 `day_of_week`, `month`, `quarter`, `week_of_year`, `is_us_holiday`, `days_to_holiday`
 
 **Target**
-`target_return = (close_{t+1} − close_t) / close_t` — computed at training time, not stored in Gold.
+`target_return = (close_{t+1} − close_t) / close_t` — computed at training time by `training_dataset`, not stored in Gold. The Gold layer stores `target_return = None`.
 
 ---
 
 ## Model
 
-**Algorithm:** LightGBM (`lgb.LGBMRegressor`, GBDT, RMSE objective)
+**Algorithm:** `HistGradientBoostingRegressor` (scikit-learn, squared error objective)
+
+This is **not** LightGBM. `HistGradientBoostingRegressor` is sklearn's native gradient boosted trees implementation. It requires no `libgomp` system library and runs without modification on Dagster+ Serverless.
 
 **Hyperparameter optimisation:** Optuna (50 trials, minimise validation RMSE)
 
-| Parameter | Search space |
-|-----------|-------------|
-| `n_estimators` | 200 – 2 000 |
-| `learning_rate` | 1e-3 – 0.3 (log) |
-| `num_leaves` | 20 – 300 |
-| `max_depth` | 3 – 12 |
-| `min_child_samples` | 5 – 100 |
-| `subsample` | 0.5 – 1.0 |
-| `colsample_bytree` | 0.5 – 1.0 |
-| `reg_alpha`, `reg_lambda` | 1e-8 – 10 (log) |
+| Parameter | Search space | Notes |
+|-----------|-------------|-------|
+| `max_iter` | 200 – 2 000 | Number of boosting rounds |
+| `learning_rate` | 1e-3 – 0.3 (log) | Shrinkage rate |
+| `max_leaf_nodes` | 20 – 300 | Tree complexity |
+| `max_depth` | 3 – 12 | Maximum tree depth |
+| `min_samples_leaf` | 5 – 100 | Leaf regularisation |
+| `l2_regularization` | 1e-8 – 10 (log) | L2 penalty on leaf values |
+| `max_features` | 0.5 – 1.0 | Feature subsampling per split |
 
 **Chronological split (no shuffle)**
 
@@ -111,7 +112,7 @@ Each ticker gets the full hub-city weather signal: `{city}_{temp_max|temp_min|pr
 | Validation | 2025-01-01 → 2025-06-30 |
 | Test | 2025-07-01 → present |
 
-**Experiment tracking:** Dagster+ asset metadata. Every `trained_model` and `model_evaluation` materialisation logs params and metrics (MAE, RMSE, R², directional accuracy) as `MetadataValue` entries, visible in the Dagster+ UI asset history. MLflow (`dagster-mlflow`) is available as a future upgrade path.
+**Experiment tracking:** Dagster+ asset metadata. Every `trained_model` and `model_evaluation` materialisation logs params and metrics (MAE, RMSE, R², directional accuracy) as `MetadataValue` entries, visible as time-series charts in the Dagster+ UI asset history. MLflow (`dagster-mlflow`) is available as a future upgrade path.
 
 **Champion promotion:** `champion_model` compares the new model's test RMSE against `champion/metrics.json` in GCS. Promotion happens only when the new RMSE is strictly lower.
 
@@ -150,6 +151,8 @@ The `serving_endpoint` Dagster asset acts as a readiness gate — it smoke-tests
 
 When more than 30% of numeric features drift, a **Prometheus** counter (`drift_detected_total`) is incremented and the **`drift_retrain_sensor`** yields a `RunRequest` for `retrain_job`.
 
+**Current limitation:** Monitoring covers *data drift* (feature distribution shift) only. *Concept drift* (live prediction accuracy degradation) requires persisting serving predictions to a `serving_logs` table for comparison against eventual actuals. This is a planned enhancement.
+
 ---
 
 ## Pipeline Schedules
@@ -177,10 +180,10 @@ The ingestion schedule targets trading days only (Mon–Fri). Weekend partitions
 | **Frankfurter** | FX rates (no API key) |
 | **httpx** | HTTP client for Open-Meteo and Frankfurter calls with retry/backoff |
 | **Pandera** | DataFrame schema validation in Silver layer |
-| **LightGBM** | Gradient boosted regression model |
+| **scikit-learn** | `HistGradientBoostingRegressor` — gradient boosted regression, no system library deps |
 | **Optuna** | Bayesian hyperparameter optimisation (50 trials per retrain) |
 | **FastAPI + uvicorn** | Real-time prediction serving |
-| **Evidently** | Feature and prediction drift detection |
+| **Evidently** | Feature drift detection (`DataDriftPreset`) |
 | **Prometheus client** | Drift metric exposure (`drift_detected_total` counter) |
 | **Dask** | `DaskResource` with `LocalCluster` — available for large backfills |
 | **DVC** | Bronze Parquet versioning via GCS remote |
@@ -313,6 +316,9 @@ Local git hooks (pre-commit + Ruff) enforce formatting before any commit reaches
 ---
 
 ## Design Decisions
+
+**Why HistGradientBoostingRegressor instead of LightGBM?**
+`HistGradientBoostingRegressor` is sklearn's native GBDT implementation. It does not depend on `libgomp` (OpenMP), which is unavailable on Dagster+ Serverless containers. LightGBM requires a compiled C extension linked against libgomp and fails to import in that environment. HGBR achieves comparable accuracy with zero system-library dependencies, enabling serverless deployment without a custom container layer.
 
 **Why BigQuery as a feature store?**
 Gold features are already partitioned by `(date, ticker)` in BigQuery. The serving app queries BigQuery at prediction time — this avoids running a separate feature store service while still benefiting from BigQuery's partitioning, caching, and SQL access for ad-hoc analysis.

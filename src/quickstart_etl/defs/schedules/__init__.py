@@ -1,12 +1,6 @@
-from dagster import AssetSelection, ScheduleDefinition, define_asset_job
+from dagster import ScheduleDefinition
 
-from ..jobs import daily_ingestion_job, retrain_job
-
-monitoring_job = define_asset_job(
-    name="monitoring_job",
-    description="Run daily drift reports for all airline tickers.",
-    selection=AssetSelection.groups("monitoring"),
-)
+from ..jobs import daily_ingestion_job, monitoring_job, retrain_job
 
 # Mon–Fri at 06:00 UTC — runs after US market close (previous day's data is settled)
 daily_schedule = ScheduleDefinition(

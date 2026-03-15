@@ -12,6 +12,12 @@ daily_ingestion_job = define_asset_job(
 
 retrain_job = define_asset_job(
     name="retrain_job",
-    description="Re-train the LightGBM model on the full gold_features history and promote champion if RMSE improves.",
+    description="Re-train the HGBR model on the full gold_features history and promote champion if RMSE improves.",
     selection=AssetSelection.groups("training"),
+)
+
+monitoring_job = define_asset_job(
+    name="monitoring_job",
+    description="Run daily drift reports for all airline tickers.",
+    selection=AssetSelection.groups("monitoring"),
 )

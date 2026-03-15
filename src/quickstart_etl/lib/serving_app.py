@@ -7,13 +7,19 @@ Start with:
 The app loads the champion model from GCS on the first request (cached in
 memory) and queries gold_features from BigQuery for the requested (date, ticker).
 All configuration comes from environment variables (same .env as the Dagster pipeline).
+
+Prediction logs are written asynchronously to BigQuery table `serving_logs`
+after each successful prediction. This table feeds the concept-drift monitoring
+layer (Evidently RegressionPreset in drift_report).
 """
 
 from __future__ import annotations
 
 import json
+import logging
 import os
 import pickle
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from functools import lru_cache
 
@@ -21,6 +27,11 @@ from fastapi import FastAPI, HTTPException
 from google.cloud import bigquery as bq_client
 from google.cloud import storage
 from pydantic import BaseModel, field_validator
+
+logger = logging.getLogger(__name__)
+
+# Background executor for fire-and-forget BigQuery log writes
+_log_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="serving_log")
 
 # ---------------------------------------------------------------------------
 # App
@@ -113,6 +124,61 @@ def _load_champion_version() -> str:
 
 
 # ---------------------------------------------------------------------------
+# Serving log writer (fire-and-forget background write to BigQuery)
+# ---------------------------------------------------------------------------
+
+
+def _write_serving_log(
+    date: str,
+    ticker: str,
+    predicted_return: float,
+    model_version: str,
+    prediction_timestamp: str,
+) -> None:
+    """Insert one prediction record into BigQuery serving_logs (non-blocking).
+
+    Called via ThreadPoolExecutor — errors are logged but never propagate to the
+    caller, so a BigQuery issue never fails a live prediction response.
+
+    Table schema (auto-created on first write if it doesn't exist):
+        date STRING, ticker STRING, predicted_return FLOAT64,
+        model_version STRING, prediction_timestamp TIMESTAMP
+    """
+    try:
+        project = os.environ["GCP_PROJECT_ID"]
+        dataset = os.environ["BIGQUERY_DATASET"]
+        table_id = f"{project}.{dataset}.serving_logs"
+
+        bq = bq_client.Client(project=project)
+
+        # Create the table if it doesn't exist yet
+        schema = [
+            bq_client.SchemaField("date", "STRING"),
+            bq_client.SchemaField("ticker", "STRING"),
+            bq_client.SchemaField("predicted_return", "FLOAT64"),
+            bq_client.SchemaField("model_version", "STRING"),
+            bq_client.SchemaField("prediction_timestamp", "TIMESTAMP"),
+        ]
+        table_ref = bq_client.Table(table_id, schema=schema)
+        bq.create_table(table_ref, exists_ok=True)
+
+        rows = [
+            {
+                "date": date,
+                "ticker": ticker,
+                "predicted_return": predicted_return,
+                "model_version": model_version,
+                "prediction_timestamp": prediction_timestamp,
+            }
+        ]
+        errors = bq.insert_rows_json(table_id, rows)
+        if errors:
+            logger.warning("BigQuery serving_log insert errors: %s", errors)
+    except Exception as exc:
+        logger.warning("Failed to write serving log (non-fatal): %s", exc)
+
+
+# ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
 
@@ -166,11 +232,22 @@ def predict(request: PredictRequest):
 
     X = result[feature_cols].to_numpy(dtype=np.float32)
     predicted_return = float(model.predict(X)[0])
+    prediction_timestamp = datetime.now(timezone.utc).isoformat()
+
+    # Fire-and-forget async log write — does NOT block the response
+    _log_executor.submit(
+        _write_serving_log,
+        request.date,
+        request.ticker,
+        predicted_return,
+        model_version,
+        prediction_timestamp,
+    )
 
     return PredictResponse(
         ticker=request.ticker,
         prediction_date=request.date,
         predicted_return=predicted_return,
         model_version=model_version,
-        prediction_timestamp=datetime.now(timezone.utc).isoformat(),
+        prediction_timestamp=prediction_timestamp,
     )
