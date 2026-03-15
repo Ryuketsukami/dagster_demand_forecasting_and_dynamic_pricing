@@ -4,4 +4,5 @@ locations:
     module_name: quickstart_etl.definitions
   working_directory: /app/src
   build:
-    directory: .   # Dockerfile is at the repo root
+    directory: .
+    registry: ghcr.io/ryuketsukami/dagster_demand_forecasting_and_dynamic_pricing
