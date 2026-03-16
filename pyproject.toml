@@ -8,29 +8,21 @@ dependencies = [
     "dagster-gcp",
     "dagster-gcp-pandas",
     "httpx",
-    "dagster-dbt",
-    "dagster-mlflow",
-    "dagster-docker",
     "dask[complete]",
-    "dask-bigquery",
     "pyarrow",
     "pandas",
     "matplotlib",
     "scikit-learn",
     "google-cloud-bigquery",
     "google-cloud-storage",
-    "mlflow",
     "optuna",
-    "great-expectations",
     "pandera",
-    "feast[gcp]",
-    "tsfresh",
     "holidays",
     "fastapi",
     "uvicorn",
-    "gunicorn", # production ASGI server
-    "evidently", # data drift and prediction drift detection
-    "prometheus-client", # exposing metrics for monitoring
+    "gunicorn",
+    "evidently",
+    "prometheus-client",
     "yfinance",
 ]
 

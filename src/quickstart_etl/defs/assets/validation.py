@@ -11,7 +11,7 @@ import io
 import os
 
 import pandas as pd
-import pandera as pa
+import pandera.pandas as pa
 from dagster import AssetExecutionContext, MetadataValue, Output, asset
 from dagster_gcp import GCSResource
 

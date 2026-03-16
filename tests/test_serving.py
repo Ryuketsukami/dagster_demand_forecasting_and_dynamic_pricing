@@ -201,10 +201,12 @@ class TestServingAppPredict:
         sa._load_champion_model.cache_clear()
         sa._load_feature_cols.cache_clear()
         sa._load_champion_version.cache_clear()
+        sa._bq_client_singleton = None  # reset BQ singleton so each test gets a fresh mock
         yield
         sa._load_champion_model.cache_clear()
         sa._load_feature_cols.cache_clear()
         sa._load_champion_version.cache_clear()
+        sa._bq_client_singleton = None
 
     def _mock_gcs_and_bq(self, mocker_patches, model, feature_cols: list[str]):
         """Patch GCS and BQ clients so the app finds a champion model."""
