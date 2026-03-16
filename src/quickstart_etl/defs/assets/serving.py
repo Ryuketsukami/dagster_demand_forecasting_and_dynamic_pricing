@@ -3,7 +3,9 @@ Serving layer — validates champion model and writes serving config to GCS.
 
 Asset:
     serving_endpoint  — verifies champion model is present and loadable;
-                        writes serving_config.json to GCS with version info.
+                        writes serving_config.json to GCS with version info;
+                        calls POST /reload on the running FastAPI server so it
+                        picks up the new champion without a process restart.
 
 The actual inference server (FastAPI) lives in lib/serving_app.py and is
 started externally with:
@@ -15,6 +17,7 @@ import os
 import pickle
 from datetime import datetime, timezone
 
+import httpx
 from dagster import AssetExecutionContext, MaterializeResult, MetadataValue, asset
 from dagster_gcp import GCSResource
 
@@ -89,6 +92,25 @@ def serving_endpoint(
         content_type="application/json",
     )
 
+    # ---- 5. Signal the running FastAPI server to reload its model cache ----
+    # This is best-effort: if the server isn't running yet, the reload is skipped
+    # gracefully. The server will load the correct champion on its first request.
+    serving_host = os.environ.get("SERVING_HOST", "0.0.0.0")
+    serving_port = os.environ.get("SERVING_PORT", "8080")
+    reload_url = f"http://{serving_host}:{serving_port}/reload"
+    reload_triggered = False
+    try:
+        with httpx.Client(timeout=5.0) as http:
+            resp = http.post(reload_url)
+            resp.raise_for_status()
+            reload_triggered = True
+            context.log.info(f"Model cache reloaded on serving app ({reload_url})")
+    except Exception as exc:
+        context.log.info(
+            f"Could not reach serving app at {reload_url} — "
+            f"server will load champion on next request. ({exc})"
+        )
+
     return MaterializeResult(
         metadata={
             "champion_rmse": MetadataValue.float(
@@ -98,5 +120,6 @@ def serving_endpoint(
             "serving_config_path": MetadataValue.text(f"gs://{bucket_name}/{_SERVING_CONFIG_PATH}"),
             "start_command": MetadataValue.text(config["start_command"]),
             "last_updated": MetadataValue.text(config["last_updated"]),
+            "reload_triggered": MetadataValue.bool(reload_triggered),
         }
     )

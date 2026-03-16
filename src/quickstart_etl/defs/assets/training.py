@@ -120,6 +120,27 @@ def training_dataset(
         f"Split sizes — train: {len(train_df)}, val: {len(val_df)}, test: {len(test_df)}"
     )
 
+    # --- Data sanity assertions before writing splits ---
+    target_999 = df["target_return"].abs().quantile(0.999)
+    if target_999 >= 0.5:
+        raise ValueError(
+            f"target_return 99.9th percentile is {target_999:.2%} — exceeds 50%. "
+            "Possible data corruption or join bug in gold_features."
+        )
+
+    n_feature_cols = len([c for c in df.columns if c not in _EXCLUDE_COLS])
+    if n_feature_cols < 60:
+        raise ValueError(
+            f"Expected ≥60 feature columns, got {n_feature_cols}. "
+            "feature_logic.py may have changed or silver tables are missing columns."
+        )
+
+    if train_df.empty or val_df.empty:
+        raise ValueError(
+            f"Train ({len(train_df)}) or val ({len(val_df)}) split is empty — "
+            "check gold_features date range coverage."
+        )
+
     gcs_client = gcs_resource.get_client()
     for split_df, path in [
         (train_df, _TRAIN_PATH),
