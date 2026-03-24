@@ -157,7 +157,7 @@ def training_dataset(
 
 
 # ---------------------------------------------------------------------------
-# Asset 2: Train LightGBM with Optuna HPO
+# Asset 2: Train HistGradientBoostingRegressor with Optuna HPO
 # ---------------------------------------------------------------------------
 
 

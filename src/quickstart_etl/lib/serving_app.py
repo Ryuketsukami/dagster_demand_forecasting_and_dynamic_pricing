@@ -165,7 +165,7 @@ def _write_serving_log(
         dataset = os.environ["BIGQUERY_DATASET"]
         table_id = f"{project}.{dataset}.serving_logs"
 
-        bq = bq_client.Client(project=project)
+        bq = _get_bq_client()
 
         # Create the table if it doesn't exist yet
         schema = [

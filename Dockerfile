@@ -25,11 +25,9 @@ RUN uv sync --no-dev
 # ── Runtime stage ───────────────────────────────────────────────────────────
 FROM python:3.10-slim
 
-# libgomp1  — OpenMP runtime required by LightGBM
 # ca-certificates — required for TLS connections to GCP / BigQuery
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       libgomp1 \
        ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 

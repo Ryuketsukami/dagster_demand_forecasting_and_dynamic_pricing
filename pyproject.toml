@@ -11,7 +11,6 @@ dependencies = [
     "dask[complete]",
     "pyarrow",
     "pandas",
-    "matplotlib",
     "scikit-learn",
     "google-cloud-bigquery",
     "google-cloud-storage",
@@ -26,23 +25,14 @@ dependencies = [
     "yfinance",
 ]
 
-# Gcloud CLI
-# google kubernetes engine (gke)
-# Vertex AI (vertex)
-# grafana (docker or gcp marketplace)
-# github-actions (for CI/CD)
-# terraform (for infrastructure as code)
-# we should run uv sync every time we add something here to keep dependencies up to date
-
 
 [dependency-groups]
 dev = [
     "dagster-dg-cli>=1.11.11",
     "dagster-webserver",
     "pytest",
-    "pre-commit", # git hooks for linting and formatting
-    "ruff", # linter and formatter
-    "dvc[gs]", # data version control with Google Cloud Storage support
+    "pre-commit",
+    "ruff",
 ]
 
 [build-system]
