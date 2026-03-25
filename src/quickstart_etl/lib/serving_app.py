@@ -26,12 +26,28 @@ from functools import lru_cache
 from fastapi import FastAPI, HTTPException
 from google.cloud import bigquery as bq_client
 from google.cloud import storage
+from google.cloud.bigquery import QueryJobConfig, ScalarQueryParameter
 from pydantic import BaseModel, field_validator
 
 logger = logging.getLogger(__name__)
 
 # Background executor for fire-and-forget BigQuery log writes
 _log_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="serving_log")
+
+# ---------------------------------------------------------------------------
+# Module-level BigQuery client singleton (lazy-initialised on first request)
+# ---------------------------------------------------------------------------
+
+_bq_client_singleton: bq_client.Client | None = None
+
+
+def _get_bq_client() -> bq_client.Client:
+    """Return the module-level BigQuery client, creating it on first call."""
+    global _bq_client_singleton
+    if _bq_client_singleton is None:
+        _bq_client_singleton = bq_client.Client(project=os.environ["GCP_PROJECT_ID"])
+    return _bq_client_singleton
+
 
 # ---------------------------------------------------------------------------
 # App
@@ -149,7 +165,7 @@ def _write_serving_log(
         dataset = os.environ["BIGQUERY_DATASET"]
         table_id = f"{project}.{dataset}.serving_logs"
 
-        bq = bq_client.Client(project=project)
+        bq = _get_bq_client()
 
         # Create the table if it doesn't exist yet
         schema = [
@@ -188,11 +204,28 @@ def health():
     return {"status": "ok"}
 
 
+@app.post("/reload")
+def reload_model():
+    """Evict the in-memory model cache and reset the BigQuery client.
+
+    Call this after a new champion model is promoted so the server picks up
+    the new artifacts without a full process restart. The next /predict request
+    will reload model.pkl, feature_cols.json, and metrics.json from GCS.
+    """
+    global _bq_client_singleton
+    _load_champion_model.cache_clear()
+    _load_feature_cols.cache_clear()
+    _load_champion_version.cache_clear()
+    _bq_client_singleton = None  # reinitialise on next request
+    logger.info("Model cache cleared — next prediction will reload from GCS.")
+    return {"status": "reloaded", "timestamp": datetime.now(timezone.utc).isoformat()}
+
+
 @app.post("/predict", response_model=PredictResponse)
 def predict(request: PredictRequest):
     """Predict next-day return for a given (date, ticker) using gold_features from BigQuery."""
-    project = os.environ["GCP_PROJECT_ID"]
     dataset = os.environ["BIGQUERY_DATASET"]
+    project = os.environ["GCP_PROJECT_ID"]
 
     # Load cached artifacts
     try:
@@ -202,14 +235,18 @@ def predict(request: PredictRequest):
     except RuntimeError as exc:
         raise HTTPException(status_code=503, detail=str(exc))
 
-    # Query gold_features for the requested (date, ticker)
-    bq = bq_client.Client(project=project)
+    # Query gold_features using parameterized query — never interpolate user input into SQL
+    job_config = QueryJobConfig(
+        query_parameters=[
+            ScalarQueryParameter("req_date", "STRING", request.date),
+            ScalarQueryParameter("req_ticker", "STRING", request.ticker),
+        ]
+    )
     query = (
         f"SELECT * FROM `{project}.{dataset}.gold_features`"
-        f" WHERE date = '{request.date}' AND ticker = '{request.ticker}'"
-        f" LIMIT 1"
+        " WHERE date = @req_date AND ticker = @req_ticker LIMIT 1"
     )
-    result = bq.query(query).to_dataframe()
+    result = _get_bq_client().query(query, job_config=job_config).to_dataframe()
 
     if result.empty:
         raise HTTPException(

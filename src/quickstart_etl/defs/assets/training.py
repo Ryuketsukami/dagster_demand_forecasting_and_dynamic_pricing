@@ -120,6 +120,15 @@ def training_dataset(
         f"Split sizes — train: {len(train_df)}, val: {len(val_df)}, test: {len(test_df)}"
     )
 
+    # Data quality is enforced by @asset_check definitions in defs/checks/training_checks.py
+    # (training_feature_count_check, training_target_range_check, training_split_sizes_check).
+    # Inline hard-stop: empty splits mean there is literally nothing to train on.
+    if train_df.empty or val_df.empty:
+        raise ValueError(
+            f"Train ({len(train_df)}) or val ({len(val_df)}) split is empty — "
+            "check gold_features date range coverage."
+        )
+
     gcs_client = gcs_resource.get_client()
     for split_df, path in [
         (train_df, _TRAIN_PATH),
@@ -148,7 +157,7 @@ def training_dataset(
 
 
 # ---------------------------------------------------------------------------
-# Asset 2: Train LightGBM with Optuna HPO
+# Asset 2: Train HistGradientBoostingRegressor with Optuna HPO
 # ---------------------------------------------------------------------------
 
 

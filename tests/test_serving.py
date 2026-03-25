@@ -201,10 +201,12 @@ class TestServingAppPredict:
         sa._load_champion_model.cache_clear()
         sa._load_feature_cols.cache_clear()
         sa._load_champion_version.cache_clear()
+        sa._bq_client_singleton = None  # reset BQ singleton so each test gets a fresh mock
         yield
         sa._load_champion_model.cache_clear()
         sa._load_feature_cols.cache_clear()
         sa._load_champion_version.cache_clear()
+        sa._bq_client_singleton = None
 
     def _mock_gcs_and_bq(self, mocker_patches, model, feature_cols: list[str]):
         """Patch GCS and BQ clients so the app finds a champion model."""
@@ -368,7 +370,7 @@ class TestServingLogWriter:
         from quickstart_etl.lib.serving_app import _write_serving_log
 
         with patch(
-            "quickstart_etl.lib.serving_app.bq_client.Client",
+            "quickstart_etl.lib.serving_app._get_bq_client",
             side_effect=Exception("BQ connection refused"),
         ):
             # Should not raise
@@ -388,7 +390,7 @@ class TestServingLogWriter:
         mock_bq.insert_rows_json.side_effect = lambda tbl, rows: captured_rows.extend(rows) or []
         mock_bq.create_table = MagicMock()
 
-        with patch("quickstart_etl.lib.serving_app.bq_client.Client", return_value=mock_bq):
+        with patch("quickstart_etl.lib.serving_app._get_bq_client", return_value=mock_bq):
             _write_serving_log("2024-03-15", "UAL", 0.008, "rmse=0.01", "2024-03-15T12:00:00Z")
 
         assert len(captured_rows) == 1
